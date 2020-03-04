@@ -27,32 +27,38 @@ Copy `instascan.min.js` from the [releases](https://github.com/schmich/instascan
 
 ## Example
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Instascan</title>
-    <script type="text/javascript" src="instascan.min.js"></script>
-  </head>
-  <body>
-    <video id="preview"></video>
-    <script type="text/javascript">
-      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-      scanner.addListener('scan', function (content) {
-        console.log(content);
-      });
-      Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-          scanner.start(cameras[0]);
-        } else {
-          console.error('No cameras found.');
-        }
-      }).catch(function (e) {
-        console.error(e);
-      });
-    </script>
-  </body>
-</html>
+```jsx
+import React from 'react';
+import './App.css';
+import Instascan from 'instascan';
+
+let setup = () => {
+console.log('setup')
+  let scanner = new Instascan.Scanner({ video: document.getElementById('IMAGE') });
+  scanner.addListener('scan', function (content) {
+    console.log(content);
+  });
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+      scanner.start(cameras[0]);
+    } else {
+      console.error('No cameras found.');
+    }
+  }).catch(function (e) {
+    console.error(e);
+  });
+};
+
+function App() {
+  setTimeout(setup, 1000);
+  return (
+    <div className="App">
+      <video id="IMAGE"></video>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 ## API
